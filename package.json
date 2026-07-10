@@ -1,0 +1,10 @@
+{
+  "name": "flask-blog-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix tarot-mood-app run dev",
+    "build": "npm --prefix tarot-mood-app run build",
+    "preview": "npm --prefix tarot-mood-app run preview",
+    "install:app": "npm --prefix tarot-mood-app install"
+  }
+}
