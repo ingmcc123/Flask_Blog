@@ -412,14 +412,41 @@
   font-weight: 600;
   color: var(--accent-rose);
   letter-spacing: 0.05em;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.interpretation__food-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.interpretation__food-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--bg-elevated);
+}
+
+.interpretation__food-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.interpretation__food-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .interpretation__food-name {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 6px;
 }
 
 .interpretation__food-reason {

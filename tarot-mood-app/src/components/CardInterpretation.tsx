@@ -5,6 +5,8 @@ interface CardInterpretationProps {
 }
 
 export function CardInterpretation({ card }: CardInterpretationProps) {
+  const foodImageSrc = `/foods/${card.id}.jpg`;
+
   return (
     <section className="interpretation" aria-live="polite">
       <div className="interpretation__header">
@@ -23,8 +25,20 @@ export function CardInterpretation({ card }: CardInterpretationProps) {
         </div>
         <div className="interpretation__food">
           <span className="interpretation__food-label">추천 음식</span>
-          <p className="interpretation__food-name">{card.recommendedFood.name}</p>
-          <p className="interpretation__food-reason">{card.recommendedFood.reason}</p>
+          <div className="interpretation__food-card">
+            <div className="interpretation__food-image-wrap">
+              <img
+                src={foodImageSrc}
+                alt={card.recommendedFood.name}
+                className="interpretation__food-image"
+                loading="lazy"
+              />
+            </div>
+            <div className="interpretation__food-content">
+              <p className="interpretation__food-name">{card.recommendedFood.name}</p>
+              <p className="interpretation__food-reason">{card.recommendedFood.reason}</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
