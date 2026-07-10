@@ -1,14 +1,29 @@
-# Flask_Blog
+# flask_blog
 
-This is made by Flask
+기존 Flask 블로그 예제와 함께, 소설 기획용 **창작노트** 웹앱이 `creative-notes/`에 포함되어 있습니다.
 
-1. Download
+## 창작노트
 
-2. Open terminal(Directory: flask_blog)
+키워드·장르 입력 → 제목 / 로그라인 / 캐릭터 / 70화 줄거리 생성  
+(리디 19금 현대로맨스 특화 · 트렌드 키워드 추천 포함)
 
-3. input: (1) export FLASK_APP=flaskr  (2) export FLASK_ENV=development  (3) flask run
+```bash
+cd creative-notes
+npm install
+npm run dev
+```
 
-4. login: ID: min / PW: 0724
+자세한 내용은 [creative-notes/README.md](creative-notes/README.md)를 참고하세요.
 
-![1](https://user-images.githubusercontent.com/43161094/55701446-1b906280-5a0e-11e9-917a-350897e0978c.jpg)
-![2](https://user-images.githubusercontent.com/43161094/55701449-1cc18f80-5a0e-11e9-8818-e5e0dff2cb06.jpg)
+## Flask Blog (기존)
+
+1. `flask_blog.zip` 압축 해제
+2. `flask_blog` 디렉터리에서:
+
+```bash
+export FLASK_APP=flaskr
+export FLASK_ENV=development
+flask run
+```
+
+로그인: ID `min` / PW `0724`
