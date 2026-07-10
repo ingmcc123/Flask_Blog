@@ -21,6 +21,11 @@ export function CardInterpretation({ card }: CardInterpretationProps) {
           <span className="interpretation__advice-label">오늘의 조언</span>
           <p>{card.advice}</p>
         </div>
+        <div className="interpretation__food">
+          <span className="interpretation__food-label">추천 음식</span>
+          <p className="interpretation__food-name">{card.recommendedFood.name}</p>
+          <p className="interpretation__food-reason">{card.recommendedFood.reason}</p>
+        </div>
       </div>
     </section>
   );
