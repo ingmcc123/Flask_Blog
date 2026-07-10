@@ -87,7 +87,7 @@ export function ResultScreen({ note, onReset }: ResultScreenProps) {
         >
           <h2>회차별 줄거리</h2>
           <p className="section-lead">
-            1화부터 {RIDI_PLATFORM.episodes}화까지 · 리디 연재형 완결 호흡
+            핵심 관통 줄거리 + 기승전결 · 1~{RIDI_PLATFORM.episodes}화
           </p>
           <ol className="episode-list">
             {note.episodes.map((ep, i) => (
@@ -99,7 +99,28 @@ export function ResultScreen({ note, onReset }: ResultScreenProps) {
                 transition={{ delay: Math.min(i * 0.01, 0.2), duration: 0.4 }}
               >
                 <h3>{ep.title}</h3>
-                <p>{ep.summary}</p>
+                <p className="ep-core">
+                  <span className="ep-label">핵심</span>
+                  {ep.core}
+                </p>
+                <dl className="ep-arc">
+                  <div>
+                    <dt>기</dt>
+                    <dd>{ep.arc.gi}</dd>
+                  </div>
+                  <div>
+                    <dt>승</dt>
+                    <dd>{ep.arc.seung}</dd>
+                  </div>
+                  <div>
+                    <dt>전</dt>
+                    <dd>{ep.arc.jeon}</dd>
+                  </div>
+                  <div>
+                    <dt>결</dt>
+                    <dd>{ep.arc.gyeol}</dd>
+                  </div>
+                </dl>
               </motion.li>
             ))}
           </ol>

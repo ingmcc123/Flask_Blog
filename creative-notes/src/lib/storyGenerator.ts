@@ -1,4 +1,4 @@
-import type { Character, Episode, StoryNote } from '../types'
+import type { Character, Episode, EpisodeArc, StoryNote } from '../types'
 import { RIDI_PLATFORM } from './ridiTrends'
 
 function hash(str: string): number {
@@ -212,7 +212,119 @@ function buildLogline(tags: string[], cast: Cast, tone: string): string {
   return `리디 ${RIDI_PLATFORM.rating} ${RIDI_PLATFORM.genre} · ${tone}. ${hook}. ${heat}, ${turn}. ${RIDI_PLATFORM.episodes}화 완결.`
 }
 
-type Beat = { title: string; summary: string }
+type Beat = { title: string; core: string }
+
+function phaseLabel(ep: number): 'setup' | 'heat' | 'rise' | 'mid' | 'break' | 'chase' | 'reunion' | 'end' {
+  if (ep <= 8) return 'setup'
+  if (ep <= 16) return 'heat'
+  if (ep <= 28) return 'rise'
+  if (ep <= 36) return 'mid'
+  if (ep <= 42) return 'break'
+  if (ep <= 52) return 'chase'
+  if (ep <= 62) return 'reunion'
+  return 'end'
+}
+
+function buildArc(
+  ep: number,
+  title: string,
+  cast: Cast,
+  flags: { heat: boolean; contract: boolean; obsession: boolean },
+): EpisodeArc {
+  const { heroine: f, hero: m, support: s, rival: r } = cast
+  const phase = phaseLabel(ep)
+  const heatLine = flags.heat ? '수위와 더티한 기류가 감정을 앞지른다.' : '밀착의 온도가 한 단계 오른다.'
+  const ownLine = flags.obsession
+    ? `${iga(m.name)} 소유욕을 숨기지 않는다.`
+    : `${iga(m.name)} 감정을 통제하려 한다.`
+
+  const byPhase: Record<ReturnType<typeof phaseLabel>, EpisodeArc> = {
+    setup: {
+      gi:
+        ep <= 2
+          ? `${iga(f.name)} ${m.name}과 처음 얽히며 ‘${title}’이 시작된다.`
+          : ep <= 5
+            ? `둘만의 긴장 속에서 ‘${title}’ 장면이 열린다.`
+            : `주변 시선이 끼어들며 ‘${title}’의 파장이 커진다.`,
+      seung: flags.contract
+        ? ep <= 3
+          ? `계약 조건과 금지선이 구체적으로 오간다.`
+          : `계약 안에서도 스킨십·질투가 규칙을 흔든다.`
+        : `거부하면서도 시선과 말투로 거리가 좁혀진다.`,
+      jeon: `${heatLine} ${ownLine}`,
+      gyeol:
+        ep <= 4
+          ? `관계는 아직 이름이 없고, 다음 충돌만 남는다.`
+          : `우연이 아님을 직감하고 더 깊은 밀착으로 기운다.`,
+    },
+    heat: {
+      gi: `${eun(f.name)} ${m.name}의 생활권·밤의 규칙 안으로 들어간다.`,
+      seung:
+        ep % 2 === 0
+          ? `${iga(s.name)} 눈치채거나 경고한다.`
+          : `낮의 직함과 밤의 반말이 충돌한다.`,
+      jeon: flags.obsession
+        ? `‘내 거’라는 말이 나와 몸정과 맘정이 어긋나기 시작한다.`
+        : `감정이 새어 나오지만 ${eun(f.name)} 이름을 붙이지 못한다.`,
+      gyeol: `선 밖의 밤이 쌓이며 갈등의 불씨를 남긴다.`,
+    },
+    rise: {
+      gi: `${r.name}·가문·회사 등 외부 압력이 ‘${title}’을 흔든다.`,
+      seung: `질투와 체면이 겹치고, ${m.name}의 결핍이 언뜻 드러난다.`,
+      jeon: `${iga(f.name)} 자존심으로 선을 긋거나 오해의 칼에 베인다.`,
+      gyeol: `관계는 깊어졌으나 더 위태로운 채로 중반을 향한다.`,
+    },
+    mid: {
+      gi: `고백이 목전까지 차오른 채 ‘${title}’이 열린다.`,
+      seung: `${iga(m.name)} 또는 ${iga(f.name)} 진심을 흘리지만 답은 미완이다.`,
+      jeon: `타이밍이 어긋나고, 달콤한 착각 아래 균열이 보인다.`,
+      gyeol: `사랑은 말했으나 신뢰는 아직이다. 오해의 그림자가 남는다.`,
+    },
+    break: {
+      gi: `결정적 오해와 이별의 공기가 ‘${title}’을 덮는다.`,
+      seung: flags.heat
+        ? `마지막 밤의 수위가 잔인할 만큼 솔직하다.`
+        : `거리 두기와 침묵 속에서도 서로가 붙잡힌다.`,
+      jeon: flags.contract
+        ? `${iga(f.name)} 계약 종료를 통보하고 판이 깨진다.`
+        : `${iga(f.name)} 이별을 선언하고 ${m.name}의 표정이 무너진다.`,
+      gyeol: `빈자리만 남고, 후회와 추적의 문이 열린다.`,
+    },
+    chase: {
+      gi: `${iga(m.name)} 체면을 버리고 ${eul(f.name)} 향해 움직인다.`,
+      seung: `해명·무릎·추적이 이어지고 ${r.name}의 계략이 드러나기 시작한다.`,
+      jeon: `진실이 밝혀져도 상처는 남고, ${eun(f.name)} 쉽게 문을 열지 않는다.`,
+      gyeol: `재회 직전까지 오지만 신뢰 회복은 숙제로 남는다.`,
+    },
+    reunion: {
+      gi: `재회의 문에서 둘은 ‘선택’으로 다시 마주한다.`,
+      seung: flags.heat
+        ? `수위 클라이맥스와 서툰 다정이 동시에 쏟아진다.`
+        : `서툰 다정과 새로운 규칙이 관계를 다시 쓴다.`,
+      jeon: `외부 최종 시험 앞에서 ${iga(f.name)} 도망치지 않기로 한다.`,
+      gyeol: `${iga(m.name)} 약속을 내놓고, 관계가 공적으로 고정된다.`,
+    },
+    end: {
+      gi: `큰 갈등은 잦아들고 ‘${title}’의 일상이 남는다.`,
+      seung: `${iga(s.name)} 인정하고 ${r.name}과의 인연이 정리된다.`,
+      jeon: `마지막 확인의 밤. 집착은 남되 이제는 믿는 집착이다.`,
+      gyeol:
+        ep === 70
+          ? `${gwa(f.name)} ${m.name}은 계약·오해·이별을 지나 선택으로 남는다. HEA.`
+          : `완결을 코앞에 두고 둘은 같은 방향을 본다.`,
+    },
+  }
+
+  const arc = byPhase[phase]
+  return {
+    gi: arc.gi
+      .replaceAll(`‘${title}’을`, hasBatchim(title) ? `‘${title}’을` : `‘${title}’를`)
+      .replaceAll(`‘${title}’이`, hasBatchim(title) ? `‘${title}’이` : `‘${title}’가`),
+    seung: arc.seung,
+    jeon: arc.jeon,
+    gyeol: arc.gyeol,
+  }
+}
 
 function phaseBeats(
   ep: number,
@@ -240,7 +352,7 @@ function phaseBeats(
   if (ep === 1) {
     return {
       title: '첫 충돌',
-      summary: `${setting}에서 ${iga(f.name)} ${m.name}과 마주친다. ${
+      core: `${setting}에서 ${iga(f.name)} ${m.name}과 마주친다. ${
         contract ? '계약 제안의 서막' : onenight ? '원나잇으로 이어질 기류' : '거부할 수 없는 첫인상'
       }이 깔린다.`,
     }
@@ -248,7 +360,7 @@ function phaseBeats(
   if (ep === 2) {
     return {
       title: contract ? '계약 조건' : '다시 얽히다',
-      summary: contract
+      core: contract
         ? `${iga(m.name)} 기간·동거·스킨십 범위까지 명시한 계약을 내민다. ${eun(f.name)} 이성적으로 수락한다.`
         : `${office ? '업무' : '우연'}이 두 사람을 다시 같은 공간에 가둔다.`,
     }
@@ -256,13 +368,13 @@ function phaseBeats(
   if (ep === 3) {
     return {
       title: '선 위의 긴장',
-      summary: `악수·시선·말투만으로도 공기가 달아오른다. ${heat ? '더티한 암시가 대화 사이에 섞인다.' : '금기처럼 느껴지는 끌림이 시작된다.'}`,
+      core: `악수·시선·말투만으로도 공기가 달아오른다. ${heat ? '더티한 암시가 대화 사이에 섞인다.' : '금기처럼 느껴지는 끌림이 시작된다.'}`,
     }
   }
   if (ep === 4) {
     return {
       title: heat ? '첫 수위' : '첫 밀착',
-      summary: heat
+      core: heat
         ? `둘만의 공간에서 첫 고수위 신이 열린다. 감정은 아직 계약/욕망의 언어로만 말한다.`
         : `${iga(m.name)} 거리를 좁히고, ${eun(f.name)} 밀려나면서도 밀어내지 못한다.`,
     }
@@ -270,25 +382,25 @@ function phaseBeats(
   if (ep === 5) {
     return {
       title: '아침의 규칙',
-      summary: `밤이 지나도 관계는 ‘연애’가 아니다. ${eun(f.name)} 선을 다시 긋고, ${iga(m.name)} 그 선을 재미있어 한다.`,
+      core: `밤이 지나도 관계는 ‘연애’가 아니다. ${eun(f.name)} 선을 다시 긋고, ${iga(m.name)} 그 선을 재미있어 한다.`,
     }
   }
   if (ep === 6) {
     return {
       title: office ? '사내의 눈' : '주변의 시선',
-      summary: `${s.name}이 눈치를 채기 시작한다. ${office ? '사내 소문' : '지인들의 질문'}이 두 사람을 자극한다.`,
+      core: `${s.name}이 눈치를 채기 시작한다. ${office ? '사내 소문' : '지인들의 질문'}이 두 사람을 자극한다.`,
     }
   }
   if (ep === 7) {
     return {
       title: '질투의 예고',
-      summary: `${r.name}의 등장. ${m.name}의 원래 세계가 ${f.name} 앞에 펼쳐진다.`,
+      core: `${r.name}의 등장. ${m.name}의 원래 세계가 ${f.name} 앞에 펼쳐진다.`,
     }
   }
   if (ep === 8) {
     return {
       title: obsession ? '소유 선언' : '나만의 밤',
-      summary: obsession
+      core: obsession
         ? `${iga(m.name)} 처음으로 ‘내 거’라는 말을 꺼낸다. 로맨스보다 소유에 가깝다.`
         : `반복되는 밤. 몸정은 깊어지고 마음은 아직 이름을 붙이지 못한다.`,
     }
@@ -298,7 +410,7 @@ function phaseBeats(
     const titles = ['동거의 리듬', '약한 틈', '업무와 침대', '숨긴 과거']
     return {
       title: titles[ep - 9],
-      summary: `${eun(f.name)} ${m.name}의 생활권에 끌려 들어간다. ${
+      core: `${eun(f.name)} ${m.name}의 생활권에 끌려 들어간다. ${
         ep === 11 ? '낮의 존댓말/직함과 밤의 반말이 충돌한다.' : `${pick(['키스', '스킨십', '질투'], seed + ep)}가 일상이 된다.`
       }`,
     }
@@ -307,7 +419,7 @@ function phaseBeats(
     const titles = ['감정 누수', '친구의 경고', '위험한 달콤함', '계약 밖의 밤']
     return {
       title: titles[ep - 13],
-      summary:
+      core:
         ep === 14
           ? `${iga(s.name)} ${f.name}에게 선을 넘지 말라고 경고한다. 이미 늦었을지도 모른다.`
           : `${heat ? '수위가 한 단계 올라가고' : '밀착이 잦아지며'}, ${eun(f.name)} 자신을 설득하기 어려워진다.`,
@@ -317,7 +429,7 @@ function phaseBeats(
     const t = ['어색한 공식 자리', '가문의 그림자', '질투 폭발', '달아오른 화해'][ep - 17]
     return {
       title: t,
-      summary:
+      core:
         ep === 19
           ? `${iga(m.name)} ${r.name} 앞에서 ${eul(f.name)} 노골적으로 표시한다. 소유욕이 수면 위로 오른다.`
           : `외부 압력이 둘을 붙였다 떼었다 한다. 밤의 화해가 낮의 오해를 덮는다.`,
@@ -327,7 +439,7 @@ function phaseBeats(
   if (ep <= 24) {
     return {
       title: ['상처의 출처', '약한 남주', '여주의 선', '밀려드는 맘정'][ep - 21],
-      summary:
+      core:
         ep === 22
           ? `${m.name}의 과거 결핍이 드러난다. 집착의 뿌리가 단순 욕정이 아님을 암시한다.`
           : `${eun(f.name)} 몸정 너머의 감정을 인정할 뻔한다. 그러나 바로 부정한다.`,
@@ -336,7 +448,7 @@ function phaseBeats(
   if (ep <= 28) {
     return {
       title: ['삼각의 칼', '오해의 씨앗', '침묵의 동거', '폭발 직전'][ep - 25],
-      summary:
+      core:
         ep === 26
           ? `${iga(r.name)} 교묘한 오해를 심는다. ${f.name}의 자존심이 먼저 다친다.`
           : `대화는 줄고 스킨십만 남는다. ${heat ? '고수위일수록 공허함이 커진다.' : '관계가 위태롭다.'}`,
@@ -345,7 +457,7 @@ function phaseBeats(
   if (ep <= 32) {
     return {
       title: ['중반 고조', '거의 고백', '타이밍 엇갈림', '감정의 이름'][ep - 29],
-      summary:
+      core:
         ep === 32
           ? `${iga(f.name)} 처음으로 ‘좋아할지도 모른다’고 속마음으로 인정한다.`
           : `고백이 목까지 차오르지만, 계약·체면·상처가 말을 막는다.`,
@@ -355,7 +467,7 @@ function phaseBeats(
   if (ep <= 36) {
     return {
       title: ['중반 고백', '미완의 답', '달콤한 착각', '균열'][ep - 33],
-      summary:
+      core:
         ep === 33
           ? `${iga(m.name)} 감정을 토해 낸다. 그러나 ${eun(f.name)} 그 말을 온전히 믿지 못한다.`
           : `잠시 평화. 독자는 곧 무너질 균열을 이미 본다.`,
@@ -365,31 +477,31 @@ function phaseBeats(
     const map: Record<number, Beat> = {
       37: {
         title: '결정적 오해',
-        summary: `${r.name} 또는 가족·회사 이슈로 ${iga(f.name)} ${m.name}을 ‘원래 세계로 돌아갈 사람’으로 단정한다.`,
+        core: `${r.name} 또는 가족·회사 이슈로 ${iga(f.name)} ${m.name}을 ‘원래 세계로 돌아갈 사람’으로 단정한다.`,
       },
       38: {
         title: '차디찬 이성',
-        summary: `${eun(f.name)} 먼저 거리를 둔다. ${obsession ? `${iga(m.name)} 집착적으로 붙잡으려 한다.` : `${iga(m.name)} 자존심 때문에 쫓지 않는다.`}`,
+        core: `${eun(f.name)} 먼저 거리를 둔다. ${obsession ? `${iga(m.name)} 집착적으로 붙잡으려 한다.` : `${iga(m.name)} 자존심 때문에 쫓지 않는다.`}`,
       },
       39: {
         title: '마지막 밤',
-        summary: heat
+        core: heat
           ? `이별 직전의 고수위 신. 욕망과 애정이 뒤섞여 더 잔인하다.`
           : `서로를 놓기 싫은 밤. 말보다 몸이 먼저 솔직하다.`,
       },
       40: {
         title: '이별 통보',
-        summary: contract
+        core: contract
           ? `${iga(f.name)} 계약 해지·조기 종료를 통보한다.`
           : `${iga(f.name)} 이별을 선언한다. ${m.name}의 표정이 무너진다.`,
       },
       41: {
         title: '빈자리',
-        summary: `${eun(m.name)} 여주가 사라진 공간을 견디지 못한다. 후회가 시작된다.`,
+        core: `${eun(m.name)} 여주가 사라진 공간을 견디지 못한다. 후회가 시작된다.`,
       },
       42: {
         title: '여주의 붕괴',
-        summary: `${eun(f.name)} 잘한 선택이라 되뇌면서도 무너진다. ${s.name}이 곁을 지킨다.`,
+        core: `${eun(f.name)} 잘한 선택이라 되뇌면서도 무너진다. ${s.name}이 곁을 지킨다.`,
       },
     }
     return map[ep]
@@ -398,7 +510,7 @@ function phaseBeats(
   if (ep <= 48) {
     return {
       title: ['추적', '잠입', '자존심 붕괴', '무릎', '공개 해명', '아직 부족'][ep - 43],
-      summary:
+      core:
         ep === 46
           ? `${iga(m.name)} 체면을 버리고 ${f.name} 앞에 선다. 후회남의 본격 구간.`
           : `${obsession ? '집착적 추적과' : '끈질긴 설득과'} 작은 해명이 이어지지만, 신뢰는 아직 돌아오지 않는다.`,
@@ -407,7 +519,7 @@ function phaseBeats(
   if (ep <= 52) {
     return {
       title: ['진실의 조각', '배후의 칼', '라이벌 퇴장', '남은 상처'][ep - 49],
-      summary:
+      core:
         ep === 50
           ? `${r.name}의 계략·오해의 전말이 드러난다.`
           : `사실이 밝혀져도 상처는 남는다. 사랑만으로는 부족한 구간.`,
@@ -417,7 +529,7 @@ function phaseBeats(
   if (ep <= 58) {
     return {
       title: ['재회의 문', '서툰 다정', '다시 쓰는 규칙', '수위 클라이맥스', '감정의 확정', '둘만의 언어'][ep - 53],
-      summary:
+      core:
         ep === 56
           ? heat
             ? `재회 후 가장 높은 수위의 신. 소유와 애정이 동시에 폭발한다.`
@@ -428,7 +540,7 @@ function phaseBeats(
   if (ep <= 64) {
     return {
       title: ['외부 최종 시험', '가문/회사 대치', '여주의 선택', '남주의 약속', '공적 인정', '사적 확인'][ep - 59],
-      summary:
+      core:
         ep === 61
           ? `${iga(f.name)} 도망치지 않기로 한다. 자존심이 아니라 욕망과 애정을 택한다.`
           : `마지막 외부 갈등을 넘기며 두 사람의 관계가 공적으로도 사적으로도 고정된다.`,
@@ -438,29 +550,29 @@ function phaseBeats(
   const ending: Record<number, Beat> = {
     65: {
       title: '잔향',
-      summary: `큰 갈등은 잦아들고, 일상의 다정과 ${heat ? '여전한 수위' : '밀착'}이 남는다.`,
+      core: `큰 갈등은 잦아들고, 일상의 다정과 ${heat ? '여전한 수위' : '밀착'}이 남는다.`,
     },
     66: {
       title: '미래의 말',
-      summary: `${iga(m.name)} 결혼·동거·공개 연애 등 ‘다음’을 구체적으로 꺼낸다.`,
+      core: `${iga(m.name)} 결혼·동거·공개 연애 등 ‘다음’을 구체적으로 꺼낸다.`,
     },
     67: {
       title: '친구의 축복',
-      summary: `${iga(s.name)} 비로소 두 사람을 인정한다. 가벼운 에피소드로 숨을 고른다.`,
+      core: `${iga(s.name)} 비로소 두 사람을 인정한다. 가벼운 에피소드로 숨을 고른다.`,
     },
     68: {
       title: '방해자의 끝',
-      summary: `${r.name}과의 인연이 정리된다. 더 이상 둘 사이를 흔들지 못한다.`,
+      core: `${r.name}과의 인연이 정리된다. 더 이상 둘 사이를 흔들지 못한다.`,
     },
     69: {
       title: '마지막 밤',
-      summary: heat
+      core: heat
         ? `완결 직전 고수위 신. 집착은 남되, 이제는 서로를 믿는 집착이다.`
         : `서로를 확인하는 밤. 몸정과 맘정이 같은 방향을 본다.`,
     },
     70: {
       title: '완결—나만의 사람',
-      summary: `리디 ${RIDI_PLATFORM.rating} ${RIDI_PLATFORM.genre} 완결. ${gwa(f.name)} ${m.name}은 계약·오해·이별을 지나 ‘선택’으로 남는다. HEA.`,
+      core: `리디 ${RIDI_PLATFORM.rating} ${RIDI_PLATFORM.genre} 완결. ${gwa(f.name)} ${m.name}은 계약·오해·이별을 지나 ‘선택’으로 남는다. HEA.`,
     },
   }
   return ending[ep]
@@ -468,13 +580,17 @@ function phaseBeats(
 
 function buildEpisodes(tags: string[], cast: Cast, seed: number): Episode[] {
   const setting = pick(SETTINGS, seed)
+  const contract = has(tags, '계약', '선결', '정략')
+  const obsession = has(tags, '집착', '소유욕')
+  const heat = has(tags, '고수위', '씬중심', '더티토크', '하드코어')
   return Array.from({ length: RIDI_PLATFORM.episodes }, (_, i) => {
     const ep = i + 1
     const beat = phaseBeats(ep, tags, cast, setting, seed)
     return {
       number: ep,
       title: `${ep}화. ${beat.title}`,
-      summary: beat.summary,
+      core: beat.core,
+      arc: buildArc(ep, beat.title, cast, { heat, contract, obsession }),
     }
   })
 }

@@ -462,6 +462,51 @@
   letter-spacing: 0.03em;
 }
 
+.ep-core {
+  margin: 0 0 0.85rem;
+  color: var(--paper);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.ep-label {
+  display: inline-block;
+  margin-right: 0.55rem;
+  font-family: var(--font-display);
+  color: var(--celadon);
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+}
+
+.ep-arc {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.ep-arc div {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.55rem;
+  align-items: start;
+}
+
+.ep-arc dt {
+  margin: 0;
+  font-family: var(--font-display);
+  color: var(--lamp);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+.ep-arc dd {
+  margin: 0;
+  color: var(--paper-dim);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
 .episode-list p {
   margin: 0;
   color: var(--paper-dim);
