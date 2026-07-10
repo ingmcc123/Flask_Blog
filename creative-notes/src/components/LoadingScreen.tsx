@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
+import { RIDI_PLATFORM } from '../lib/ridiTrends'
 
 const LINES = [
-  '제목을 고르는 중…',
-  '로그라인을 다듬는 중…',
-  '인물의 윤곽을 잡는 중…',
-  '16화의 물길을 그리는 중…',
+  '리디형 제목을 고르는 중…',
+  '19금 로그라인을 다듬는 중…',
+  '남주·여주 프로필을 잡는 중…',
+  `${RIDI_PLATFORM.episodes}화 물길을 그리는 중…`,
 ]
 
 export function LoadingScreen() {
@@ -29,6 +30,9 @@ export function LoadingScreen() {
       >
         창작노트
       </motion.p>
+      <p className="loading-meta">
+        {RIDI_PLATFORM.name} · {RIDI_PLATFORM.rating} {RIDI_PLATFORM.genre}
+      </p>
       <ul className="loading-lines">
         {LINES.map((line, i) => (
           <motion.li

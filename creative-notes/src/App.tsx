@@ -19,7 +19,7 @@ function App() {
         const generated = generateStoryNote(keywords, genre)
         setNote(generated)
         setPhase('result')
-      }, 2400)
+      }, 2800)
     }, 750)
   }
 

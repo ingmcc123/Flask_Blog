@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import type { StoryNote } from '../types'
+import { RIDI_PLATFORM } from '../lib/ridiTrends'
 
 interface ResultScreenProps {
   note: StoryNote
@@ -31,12 +32,15 @@ export function ResultScreen({ note, onReset }: ResultScreenProps) {
           <p className="meta">
             <span>{note.genre}</span>
             <span aria-hidden="true">·</span>
-            <span>{note.keywords.join(', ')}</span>
-            <span aria-hidden="true">·</span>
-            <span>16화 완결</span>
+            <span>{RIDI_PLATFORM.episodes}화 완결</span>
           </p>
           <h1>{note.title}</h1>
           <p className="logline">{note.logline}</p>
+          <p className="keyword-cloud">
+            {note.keywords.map((k) => (
+              <span key={k}>#{k}</span>
+            ))}
+          </p>
         </motion.header>
 
         <motion.section
@@ -46,7 +50,7 @@ export function ResultScreen({ note, onReset }: ResultScreenProps) {
           transition={{ delay: 0.35, duration: 0.7 }}
         >
           <h2>캐릭터 프로필</h2>
-          <p className="section-lead">이야기의 축이 되는 네 인물</p>
+          <p className="section-lead">여주 · 남주 · 조력자 · 방해자</p>
           <ul className="character-list">
             {note.characters.map((c, i) => (
               <motion.li
@@ -82,7 +86,9 @@ export function ResultScreen({ note, onReset }: ResultScreenProps) {
           transition={{ delay: 0.55, duration: 0.7 }}
         >
           <h2>회차별 줄거리</h2>
-          <p className="section-lead">1화부터 16화까지, 완결을 향한 흐름</p>
+          <p className="section-lead">
+            1화부터 {RIDI_PLATFORM.episodes}화까지 · 리디 연재형 완결 호흡
+          </p>
           <ol className="episode-list">
             {note.episodes.map((ep, i) => (
               <motion.li
@@ -90,7 +96,7 @@ export function ResultScreen({ note, onReset }: ResultScreenProps) {
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-40px' }}
-                transition={{ delay: Math.min(i * 0.03, 0.3), duration: 0.45 }}
+                transition={{ delay: Math.min(i * 0.01, 0.2), duration: 0.4 }}
               >
                 <h3>{ep.title}</h3>
                 <p>{ep.summary}</p>
