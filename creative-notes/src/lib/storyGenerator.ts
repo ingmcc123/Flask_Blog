@@ -466,7 +466,7 @@ const packs: Record<GenreKey, GenrePack> = {
       (kw, s) => `${pick(['남겨진', '찾아가는', '깨어나는'], s)} ${kw[0] ?? '나'}`,
     ],
     logline: (kw, p, a) =>
-      `${eul(kw[0] ?? '키워드')} 중심으로 펼쳐지는 ${p.name}의 여정. ${a.name}과의 충돌 속에서 ${eul(kw[1] ?? '진실')} 마주하고, 20화 만에 하나의 완결된 세계를 남긴다.`,
+      `${eul(kw[0] ?? '키워드')} 중심으로 펼쳐지는 ${p.name}의 여정. ${a.name}과의 충돌 속에서 ${eul(kw[1] ?? '진실')} 마주하고, 16화 만에 하나의 완결된 세계를 남긴다.`,
     roles: [
       {
         role: '주인공',
@@ -496,7 +496,7 @@ const packs: Record<GenreKey, GenrePack> = {
 }
 
 function makeRomanceBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '첫 균열',
       summary: `${ctx.setting}에서 ${eun(ctx.protag.name)} ${ctx.kwa(0)} 얽힌 우연으로 ${gwa(ctx.rival.name)} 마주친다. 첫인상은 최악에 가깝다.`,
@@ -520,10 +520,6 @@ function makeRomanceBeats() {
     {
       title: '솔직해지는 밤',
       summary: `긴 대화. ${iga(ctx.protag.name)} 처음으로 약점을 보이고, ${ctx.rival.name}도 가면을 조금 벗는다.`,
-    },
-    {
-      title: '질투와 확인',
-      summary: `제3자의 접근. 질투가 감정을 선명하게 만들고, 두 사람은 서로의 필요를 확인한다.`,
     },
     {
       title: '약속',
@@ -550,16 +546,8 @@ function makeRomanceBeats() {
       summary: `${iga(ctx.mentor.name)} 숨긴 사실이 드러난다. 오해의 뿌리가 ${ctx.kwa(1)} 연결된다.`,
     },
     {
-      title: '상처의 공유',
-      summary: `서로를 탓하지 않는 대화. 사랑이 구원이 되려면 먼저 정직해야 함을 배운다.`,
-    },
-    {
       title: '위기',
       summary: `관계가 공개적으로 시험받는다. ${iga(ctx.rival.name)} 희생을 감수한다.`,
-    },
-    {
-      title: '놓친 말',
-      summary: `이별처럼 보이는 이별. 그러나 독자는 둘의 마음이 아직 끝나지 않았음을 안다.`,
     },
     {
       title: '추적',
@@ -570,18 +558,14 @@ function makeRomanceBeats() {
       summary: `숨김없이. 과거·두려움·바람까지. ${ctx.genreLabel}의 정점에서 감정이 정면으로 충돌한다.`,
     },
     {
-      title: '선택',
-      summary: `안락한 후퇴와 불확실한 동행 사이. 두 사람은 함께 남기로 한다.`,
-    },
-    {
       title: '완결—같은 계절',
       summary: `${ctx.setting}에 ${ctx.k(0)}의 흔적이 남는다. ${gwa(ctx.protag.name)} ${ctx.rival.name}의 이야기는 닫히되, 일상 속에서 계속된다.`,
-    },
+    }
   ])
 }
 
 function makeFantasyBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '각성의 징조',
       summary: `${ctx.setting}에서 ${ctx.protag.name}에게 ${ctx.k(0)}의 힘이 눈을 뜬다. 평범한 하루가 끝난다.`,
@@ -605,10 +589,6 @@ function makeFantasyBeats() {
     {
       title: '적대의 논리',
       summary: `${ctx.rival.name}의 이념이 드러난다. 단순한 악이 아니라 ‘다른 정의’다.`,
-    },
-    {
-      title: '유물',
-      summary: `${ctx.kwa(0)} 연결된 유물을 확보한다. 동시에 배신이 암시된다.`,
     },
     {
       title: '균열',
@@ -635,16 +615,8 @@ function makeFantasyBeats() {
       summary: `누군가를 지키기 위한 희생. 전쟁의 얼굴이 개인에게 닿는다.`,
     },
     {
-      title: '배후의 설계',
-      summary: `갈등의 배후에 더 큰 구조가 있음이 드러난다. ${ctx.rival.name}도 장기말일 수 있다.`,
-    },
-    {
       title: '각성의 완성',
       summary: `${iga(ctx.protag.name)} ${ctx.keul(0)} 자신의 의지로 다스린다. 힘이 목적이 아님을 선언한다.`,
-    },
-    {
-      title: '동맹',
-      summary: `예상치 못한 세력과 손을 잡는다. 최종전을 위한 판이 짜인다.`,
     },
     {
       title: '함정',
@@ -655,18 +627,14 @@ function makeFantasyBeats() {
       summary: `${gwa(ctx.rival.name)}의 최후 대결. 이념과 힘이 충돌한다.`,
     },
     {
-      title: '대가',
-      summary: `승리의 대가. ${ctx.k(1)}의 균형이 회복되지만 되돌릴 수 없는 손실이 남는다.`,
-    },
-    {
       title: '완결—새로운 지도',
       summary: `세계는 이전으로 돌아가지 않는다. ${eun(ctx.protag.name)} 남은 이들과 다음 시대의 문을 연다.`,
-    },
+    }
   ])
 }
 
 function makeThrillerBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '일상 속의 균열',
       summary: `${ctx.protag.name}의 일상에 ${ctx.k(0)} 관련 이상 징후가 끼어든다.`,
@@ -690,10 +658,6 @@ function makeThrillerBeats() {
     {
       title: '은신',
       summary: `${ctx.setting}의 음지로 숨는다. 규칙이 다른 세계가 펼쳐진다.`,
-    },
-    {
-      title: '거래',
-      summary: `정보를 얻기 위한 위험한 거래. 도덕적 선이 흐려진다.`,
     },
     {
       title: '목격자',
@@ -720,16 +684,8 @@ function makeThrillerBeats() {
       summary: `밝혀진 진실 아래 또 다른 층. ${ctx.rival.name}의 동기가 뒤집힌다.`,
     },
     {
-      title: '붕괴',
-      summary: `계획이 실패한다. ${gwa(ctx.support.name)}의 연락이 끊긴다.`,
-    },
-    {
       title: '재기',
       summary: `남은 단서 하나로 재구성. ${ctx.ki(1)} 열쇠였음이 판명된다.`,
-    },
-    {
-      title: '대치',
-      summary: `${gwa(ctx.rival.name)} 협상 테이블. 말의 칼이 오간다.`,
     },
     {
       title: '폭주',
@@ -740,18 +696,14 @@ function makeThrillerBeats() {
       summary: `증거가 확보된다. 그러나 공개하면 자신 또한 무너질 수 있다.`,
     },
     {
-      title: '결판',
-      summary: `함정과 반함정. ${iga(ctx.protag.name)} 판을 뒤집는다.`,
-    },
-    {
       title: '완결—남은 침묵',
       summary: `사건은 닫히지만 모든 이름이 밝혀지지는 않는다. ${eun(ctx.protag.name)} 살아남았고, 세상은 조금 더 정직해졌다.`,
-    },
+    }
   ])
 }
 
 function makeMysteryBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '의뢰',
       summary: `${iga(ctx.mentor.name)} ${ctx.k(0)} 사건을 ${ctx.protag.name}에게 맡긴다. 현장은 ${ctx.setting}.`,
@@ -775,10 +727,6 @@ function makeMysteryBeats() {
     {
       title: '거짓 진술',
       summary: `목격자들이 같은 방향으로 거짓말한다. 압력이 감지된다.`,
-    },
-    {
-      title: '개인적 연루',
-      summary: `${ctx.protag.name}의 과거가 사건과 겹친다. 객관성이 흔들린다.`,
     },
     {
       title: '숨겨진 방',
@@ -805,16 +753,8 @@ function makeMysteryBeats() {
       summary: `타임라인을 다시 짠다. ${ctx.k(0)}의 의미가 뒤집힌다.`,
     },
     {
-      title: '함정 수사',
-      summary: `범인을 유인하는 미끼를 놓는다. 위험이 커진다.`,
-    },
-    {
       title: '배후',
       summary: `실행범 뒤에 설계자가 있다. ${ctx.mentor.name}의 역할이 재조명된다.`,
-    },
-    {
-      title: '고백과 거짓',
-      summary: `자백이 나오지만 부분만 진실이다.`,
     },
     {
       title: '결정적 모순',
@@ -825,18 +765,14 @@ function makeMysteryBeats() {
       summary: `${iga(ctx.protag.name)} 사건 전체를 재구성해 공개한다.`,
     },
     {
-      title: '체포—그리고',
-      summary: `범인은 잡히지만, ${ctx.k(1)}에 관한 질문은 남는다.`,
-    },
-    {
       title: '완결—빈자리',
       summary: `사건은 완결된다. ${ctx.setting}에는 설명이 끝난 뒤에도 남는 공백이 있다.`,
-    },
+    }
   ])
 }
 
 function makeSfBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '결함 로그',
       summary: `${iga(ctx.protag.name)} ${ctx.k(0)} 시스템에서 삭제된 기록을 발견한다.`,
@@ -860,10 +796,6 @@ function makeSfBeats() {
     {
       title: '실험체',
       summary: `과거 실험의 생존자 목록. ${ctx.protag.name}의 이름이 있다.`,
-    },
-    {
-      title: '내부고발',
-      summary: `${iga(ctx.mentor.name)} 양심 선언을 준비한다. 암살이 시도된다.`,
     },
     {
       title: '지하 네트워크',
@@ -890,16 +822,8 @@ function makeSfBeats() {
       summary: `의식을 백업할 기회. 불멸과 소멸 사이 선택.`,
     },
     {
-      title: '침투',
-      summary: `코어 시스템 침투. ${ctx.k(0)}의 원본 코드에 접근한다.`,
-    },
-    {
       title: '배신 프로토콜',
       summary: `동지 중 하나가 업데이트된 충성을 따른다.`,
-    },
-    {
-      title: '공개',
-      summary: `진실이 네트워크에 유출된다. 사회가 흔들린다.`,
     },
     {
       title: '최종 대치',
@@ -910,18 +834,14 @@ function makeSfBeats() {
       summary: `세계를 리셋하는 대신, 불완전한 자유를 택한다.`,
     },
     {
-      title: '잔상',
-      summary: `승리 후에도 남는 데이터 잔상. 누군가는 돌아오지 못한다.`,
-    },
-    {
       title: '완결—새 프로토콜',
       summary: `${ctx.keul(1)} 포함한 새 규칙이 쓰인다. ${eun(ctx.protag.name)} 감시받지 않는 아침을 맞는다.`,
-    },
+    }
   ])
 }
 
 function makeSliceBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '문을 열다',
       summary: `${iga(ctx.protag.name)} ${ctx.setting}에서 하루를 시작한다. ${ctx.ki(0)} 일상의 중심이다.`,
@@ -945,10 +865,6 @@ function makeSliceBeats() {
     {
       title: '함께하는 일',
       summary: `공동 작업·행사. 서로의 리듬을 배운다.`,
-    },
-    {
-      title: '비 오는 휴일',
-      summary: `계획 없는 하루. 침묵이 편안해진다.`,
     },
     {
       title: '오해',
@@ -975,16 +891,8 @@ function makeSliceBeats() {
       summary: `외부 제안—도시, 이직, 이별. 안정의 가치가 시험된다.`,
     },
     {
-      title: '솔직한 오후',
-      summary: `그동안 미룬 말을 한다. 드라마 없이도 진심이 닿는다.`,
-    },
-    {
       title: '도움의 방향',
       summary: `${iga(ctx.support.name)} 위기에 처하고, 주인공이 먼저 손을 쓴다.`,
-    },
-    {
-      title: '계절이 바뀌다',
-      summary: `시간이 흘렀음을 실감한다. ${ctx.ki(1)} 다른 의미가 된다.`,
     },
     {
       title: '선택의 아침',
@@ -995,18 +903,14 @@ function makeSliceBeats() {
       summary: `연인·친구·이웃—이름보다 태도를 고른다.`,
     },
     {
-      title: '일상으로',
-      summary: `사건 없이, 그러나 이전과 다른 일상으로 돌아온다.`,
-    },
-    {
       title: '완결—열린 문',
       summary: `${ctx.setting}의 문이 다시 열린다. ${ctx.protag.name}의 이야기는 ‘계속되는 완결’이다.`,
-    },
+    }
   ])
 }
 
 function makeMartialBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '피의 밤',
       summary: `${ctx.protag.name}의 사문이 ${ctx.k(0)} 때문에 습격당한다.`,
@@ -1030,10 +934,6 @@ function makeMartialBeats() {
     {
       title: '적의 얼굴',
       summary: `${iga(ctx.rival.name)} 직접 모습을 드러낸다. 압도적이다.`,
-    },
-    {
-      title: '동문',
-      summary: `살아 있던 동문을 만난다. 기쁨과 의심이 공존한다.`,
     },
     {
       title: '암향',
@@ -1060,16 +960,8 @@ function makeMartialBeats() {
       summary: `원수 가문과도 손을 잡는다. 대의 앞에 사사로움을 내려놓는다.`,
     },
     {
-      title: '함정 연회',
-      summary: `연회가 학살로 변한다. 생존자들이 결속한다.`,
-    },
-    {
       title: '진실',
       summary: `사문 몰락의 진상이 밝혀진다. 복수가 단순하지 않아진다.`,
-    },
-    {
-      title: '결의',
-      summary: `${iga(ctx.protag.name)} 검의 길을 재정의한다.`,
     },
     {
       title: '천하풍운',
@@ -1080,18 +972,14 @@ function makeMartialBeats() {
       summary: `${gwa(ctx.rival.name)}의 최후 일합. 이념과 무공이 동시에 겨룬다.`,
     },
     {
-      title: '강호의 새벽',
-      summary: `승패 이후의 질서. 남은 자들이 규칙을 다시 쓴다.`,
-    },
-    {
       title: '완결—검을 꽂다',
       summary: `${eun(ctx.protag.name)} 복수 대신 다음 세대를 택한다. ${ctx.keun(1)} 봉인되거나 공유된다.`,
-    },
+    }
   ])
 }
 
 function makeHorrorBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '이상 징후',
       summary: `${ctx.setting}에서 ${ctx.ki(0)} 일상을 어긋나게 한다.`,
@@ -1115,10 +1003,6 @@ function makeHorrorBeats() {
     {
       title: '닫힌 공간',
       summary: `탈출구가 하나씩 사라진다.`,
-    },
-    {
-      title: '의심',
-      summary: `누가 이미 ‘그것’인지 알 수 없다.`,
     },
     {
       title: '제물',
@@ -1145,16 +1029,8 @@ function makeHorrorBeats() {
       summary: `규칙의 허점을 찾아 역으로 가둔다—잠시.`,
     },
     {
-      title: '대가',
-      summary: `봉인의 대가로 기억·감각·관계가 깎인다.`,
-    },
-    {
       title: '재침입',
       summary: `봉인이 다시 열린다. 이번엔 더 영리하다.`,
-    },
-    {
-      title: '최후의 규칙',
-      summary: `살아남기 위한 마지막 금기. 지키면 사람이 덜 남는다.`,
     },
     {
       title: '대면',
@@ -1165,18 +1041,14 @@ function makeHorrorBeats() {
       summary: `누군가가 남고, 누군가가 문을 닫는다.`,
     },
     {
-      title: '여진',
-      summary: `세계는 조용해진다. 너무 조용하다.`,
-    },
-    {
       title: '완결—남는 소리',
       summary: `이야기는 끝나지만 ${ctx.k(1)}의 속삭임은 독자의 바깥에서 이어질 듯하다.`,
-    },
+    }
   ])
 }
 
 function makeGrowthBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '시작선',
       summary: `${iga(ctx.protag.name)} ${ctx.keul(0)} 향해 첫발을 내딛는다. ${ctx.setting}.`,
@@ -1200,10 +1072,6 @@ function makeGrowthBeats() {
     {
       title: '가족의 시선',
       summary: `기대와 걱정이 충돌한다. ${ctx.ki(1)} 갈등의 핵이 된다.`,
-    },
-    {
-      title: '야심',
-      summary: `이기고 싶다는 욕망이 관계를 잠식한다.`,
     },
     {
       title: '화해의 연습',
@@ -1230,16 +1098,8 @@ function makeGrowthBeats() {
       summary: `본선·발표·공연. 긴장과 몰입.`,
     },
     {
-      title: '좌절 후의 선택',
-      summary: `결과가 기대에 못 미친다. 포기와 재도전 사이.`,
-    },
-    {
       title: '정직한 대화',
       summary: `가족·스승·친구에게 진짜 마음을 말한다.`,
-    },
-    {
-      title: '나만의 방식',
-      summary: `모방이 아닌 자기 스타일을 찾는다. ${ctx.ki(0)} 재정의된다.`,
     },
     {
       title: '재대결',
@@ -1250,18 +1110,14 @@ function makeGrowthBeats() {
       summary: `외부의 인정과 내부의 만족이 어긋남을 수용한다.`,
     },
     {
-      title: '다음 문',
-      summary: `하나의 목표가 끝나고 다음 문이 보인다.`,
-    },
-    {
       title: '완결—성장의 형태',
       summary: `${eun(ctx.protag.name)} 더 강해졌다기보다, 더 자신다워졌다. ${ctx.keun(1)} 계속된다.`,
-    },
+    }
   ])
 }
 
 function makePeriodBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '입궁·입성',
       summary: `${iga(ctx.protag.name)} ${ctx.setting}에 발을 들인다. ${ctx.ki(0)} 운명을 부른다.`,
@@ -1285,10 +1141,6 @@ function makePeriodBeats() {
     {
       title: '밤의 회동',
       summary: `동맹을 모은다. 신뢰는 조건부다.`,
-    },
-    {
-      title: '어전',
-      summary: `${ctx.mentor.name}(윗사람) 앞에서 진언한다. 위험이 커진다.`,
     },
     {
       title: '암살',
@@ -1315,16 +1167,8 @@ function makePeriodBeats() {
       summary: `가까운 이의 배신. 대가와 이유가 아프다.`,
     },
     {
-      title: '재기',
-      summary: `유배·추방에서 돌아와 판을 다시 짠다.`,
-    },
-    {
       title: '증거',
       summary: `${ctx.keul(1)} 입증할 결정적 물증.`,
-    },
-    {
-      title: '공개',
-      summary: `조정·저자에서 진실이 공개된다.`,
     },
     {
       title: '결전',
@@ -1335,18 +1179,14 @@ function makePeriodBeats() {
       summary: `승자의 질서가 선포된다. 피의 대가가 남는다.`,
     },
     {
-      title: '사사로움',
-      summary: `역사의 뒤안길에서 개인의 작별을 고한다.`,
-    },
-    {
       title: '완결—시대의 여백',
       summary: `기록에 남지 않은 이름들. ${ctx.protag.name}의 선택은 시대의 물길을 조금 바꿨다.`,
-    },
+    }
   ])
 }
 
 function makeDefaultBeats() {
-  return buildTwenty((ctx) => [
+  return buildSixteen((ctx) => [
     {
       title: '입구',
       summary: `${ctx.protag.name}의 세계에 ${ctx.ki(0)} 들어온다.`,
@@ -1370,10 +1210,6 @@ function makeDefaultBeats() {
     {
       title: '시험',
       summary: `능력·신념·관계가 시험받는다.`,
-    },
-    {
-      title: '유혹',
-      summary: `쉬운 길이 제시된다. 대가가 있다.`,
     },
     {
       title: '균열',
@@ -1400,16 +1236,8 @@ function makeDefaultBeats() {
       summary: `${iga(ctx.protag.name)} 자신의 욕망을 인정한다.`,
     },
     {
-      title: '전략',
-      summary: `최종 국면을 위한 계획. ${ctx.ki(0)} 열쇠다.`,
-    },
-    {
       title: '함정',
       summary: `계획이 어긋난다. 즉흥이 필요하다.`,
-    },
-    {
-      title: '대면',
-      summary: `${gwa(ctx.rival.name)}의 본심 대면.`,
     },
     {
       title: '결단',
@@ -1420,20 +1248,16 @@ function makeDefaultBeats() {
       summary: `선택의 결과가 세계에 퍼진다.`,
     },
     {
-      title: '정리',
-      summary: `남은 관계를 정리하고 의미를 부여한다.`,
-    },
-    {
       title: '완결—닫히는 원',
       summary: `${ctx.kwa(1)} 함께 이야기가 원점을 지나 닫힌다. ${eun(ctx.protag.name)} 다른 사람이 되어 있다.`,
-    },
+    }
   ])
 }
 
-function buildTwenty(
+function buildSixteen(
   factory: (ctx: BeatContext) => { title: string; summary: string }[],
 ): GenrePack['episodeBeats'] {
-  return Array.from({ length: 20 }, (_, i) => (ctx: BeatContext) => {
+  return Array.from({ length: 16 }, (_, i) => (ctx: BeatContext) => {
     const beats = factory(ctx)
     return beats[i]
   })

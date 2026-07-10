@@ -33,7 +33,7 @@ export function ResultScreen({ note, onReset }: ResultScreenProps) {
             <span aria-hidden="true">·</span>
             <span>{note.keywords.join(', ')}</span>
             <span aria-hidden="true">·</span>
-            <span>20화 완결</span>
+            <span>16화 완결</span>
           </p>
           <h1>{note.title}</h1>
           <p className="logline">{note.logline}</p>
@@ -82,7 +82,7 @@ export function ResultScreen({ note, onReset }: ResultScreenProps) {
           transition={{ delay: 0.55, duration: 0.7 }}
         >
           <h2>회차별 줄거리</h2>
-          <p className="section-lead">1화부터 20화까지, 완결을 향한 흐름</p>
+          <p className="section-lead">1화부터 16화까지, 완결을 향한 흐름</p>
           <ol className="episode-list">
             {note.episodes.map((ep, i) => (
               <motion.li

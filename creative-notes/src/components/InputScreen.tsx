@@ -52,7 +52,7 @@ export function InputScreen({ onSubmit, exiting }: InputScreenProps) {
           animate={{ opacity: exiting ? 0 : 1, y: 0 }}
           transition={{ delay: exiting ? 0 : 0.28, duration: 0.7 }}
         >
-          키워드와 장르로, 20화 완결 소설의 뼈대를 그립니다.
+          키워드와 장르로, 16화 완결 소설의 뼈대를 그립니다.
         </motion.p>
 
         <motion.form
