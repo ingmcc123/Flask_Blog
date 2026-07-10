@@ -1,0 +1,62 @@
+:root {
+  --ink: #0b1018;
+  --ink-mid: #141c28;
+  --ink-soft: #1e2a3a;
+  --paper: #d7dde6;
+  --paper-dim: #9aa8b8;
+  --lamp: #d4a35c;
+  --lamp-soft: rgba(212, 163, 92, 0.18);
+  --celadon: #6f9a8a;
+  --line: rgba(215, 221, 230, 0.12);
+  --danger-mute: #8a6a5a;
+
+  --font-display: 'Song Myung', 'Gowun Batang', serif;
+  --font-body: 'Gowun Dodum', 'Noto Sans KR', sans-serif;
+
+  font-family: var(--font-body);
+  line-height: 1.65;
+  font-weight: 400;
+  color: var(--paper);
+  background-color: var(--ink);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-width: 320px;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(111, 154, 138, 0.16), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 20%, var(--lamp-soft), transparent 50%),
+    radial-gradient(ellipse 40% 50% at 0% 80%, rgba(30, 42, 58, 0.9), transparent 45%),
+    var(--ink);
+  background-attachment: fixed;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--lamp);
+}
