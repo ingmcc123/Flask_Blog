@@ -36,13 +36,14 @@ body {
   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg-deep);
   color: var(--text-primary);
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
 #root {
-  min-height: 100dvh;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 button {
